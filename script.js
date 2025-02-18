@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // 初始化棋盘
     const board = [
         ['r', 'n', 'b', 'a', 'k', 'a', 'b', 'n', 'r'],
         ['', '', '', '', '', '', '', '', ''],
@@ -20,19 +19,23 @@ $(document).ready(function() {
 
     const $chessboard = $('#chessboard');
 
-    // 生成棋盘
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 9; j++) {
-            const $square = $('<div>').addClass('square').attr('data-row', i).attr('data-col', j);
+            const $square = $('<div>').addClass('square').attr('data-row', i).attr('data-col', j).css({
+                top: i * 60 + 'px',
+                left: j * 60 + 'px'
+            });
             if (board[i][j]) {
-                const $piece = $('<div>').addClass('piece').addClass(board[i][j] === board[i][j].toUpperCase() ? 'red' : 'black').text(pieceMap[board[i][j]]);
-                $square.append($piece);
+                const $piece = $('<div>').addClass('piece').addClass(board[i][j] === board[i][j].toUpperCase() ? 'red' : 'black').text(pieceMap[board[i][j]]).css({
+                    top: i * 60 + 'px',
+                    left: j * 60 + 'px'
+                });
+                $chessboard.append($piece);
             }
             $chessboard.append($square);
         }
     }
 
-    // 实现棋子移动逻辑
     let selectedPiece = null;
     $('.piece').on('click', function() {
         if (selectedPiece) {
@@ -47,7 +50,10 @@ $(document).ready(function() {
         if (selectedPiece) {
             const $targetSquare = $(this);
             if (!$targetSquare.find('.piece').length) {
-                $targetSquare.append(selectedPiece);
+                selectedPiece.css({
+                    top: $targetSquare.css('top'),
+                    left: $targetSquare.css('left')
+                });
                 selectedPiece.removeClass('selected');
                 selectedPiece = null;
             }

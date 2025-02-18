@@ -8,24 +8,34 @@ body {
 }
 
 #chessboard {
-    display: grid;
-    grid-template-columns: repeat(9, 60px);
-    grid-template-rows: repeat(10, 60px);
-    gap: 0;
+    position: relative;
+    width: 540px; /* 9 * 60px */
+    height: 600px; /* 10 * 60px */
     border: 1px solid #000;
 }
 
 .square {
+    position: absolute;
     width: 60px;
     height: 60px;
     border: 1px solid #000;
     box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+}
+
+.square::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #000;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .piece {
+    position: absolute;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -36,6 +46,7 @@ body {
     border: 2px solid #000;
     font-size: 24px;
     cursor: pointer;
+    transform: translate(-50%, -50%);
 }
 
 .red {
